@@ -20,6 +20,7 @@ public class FileServer { //implements Runnable{
 		System.out.println("======================================");
 		fileName = "doc/doc" + args[0] + ".txt";
 		file = new File(fileName);
+
 		if (file.exists()) { 
 			System.out.println("File " + fileName + " already exists");
 			System.out.println("Deleting previous file, and creating new file ... ");
@@ -47,17 +48,17 @@ public class FileServer { //implements Runnable{
 		while (true) {
 			System.out.println(" File Server ID: " + port + " Listening on port: " + port);
 			try {
-			connection = serverSocket.accept();
-			BufferedReader inFromCollector =
-				new BufferedReader(new InputStreamReader(connection.getInputStream()));
-			DataOutputStream outToCollector = new DataOutputStream(connection.getOutputStream());
-			String received = inFromCollector.readLine();
-			//System.out.println("Received: " + received);
-			String response = considerInput(received);
-			//System.out.println("Sending back to client: "+ response);
-			outToCollector.writeBytes(response + "\n");	
-			outToCollector.close();
-			inFromCollector.close();
+			    connection = serverSocket.accept();
+			    BufferedReader inFromCollector =
+				    new BufferedReader(new InputStreamReader(connection.getInputStream()));
+			    DataOutputStream outToCollector = new DataOutputStream(connection.getOutputStream());
+			    String received = inFromCollector.readLine();
+			    //System.out.println("Received: " + received);
+			    String response = considerInput(received);
+			    //System.out.println("Sending back to client: "+ response);
+			    outToCollector.writeBytes(response + "\n");	
+			    outToCollector.close();
+			    inFromCollector.close();
 			} catch (Exception e) {
 				System.out.println("Thread cannot serve connection");
 				System.exit(0);
@@ -68,18 +69,18 @@ public class FileServer { //implements Runnable{
 	// Contact collector to join the File Server lists
 	public static void contactCollector(String ip, int port, int myPort) {
 		try {
-		Socket sendingSocket = new Socket(ip,port);
-		DataOutputStream out = new DataOutputStream(sendingSocket.getOutputStream());
-		BufferedReader inFromCollector = new BufferedReader(new InputStreamReader(sendingSocket.getInputStream()));
+		    Socket sendingSocket = new Socket(ip,port);
+		    DataOutputStream out = new DataOutputStream(sendingSocket.getOutputStream());
+		    BufferedReader inFromCollector = new BufferedReader(new InputStreamReader(sendingSocket.getInputStream()));
 
-		String myIP = InetAddress.getLocalHost().getHostAddress();
-		out.writeBytes("imFileServer/" + myIP + "/" + myPort + "\n");
+		    String myIP = InetAddress.getLocalHost().getHostAddress();
+		    out.writeBytes("imFileServer/" + myIP + "/" + myPort + "\n");
 
-		String result = inFromCollector.readLine();
-		System.out.println("Collector Response: " + result);
-		out.close();
-		inFromCollector.close();
-		sendingSocket.close(); 
+		    String result = inFromCollector.readLine();
+		    System.out.println("Collector Response: " + result);
+		    out.close();
+		    inFromCollector.close();
+		    sendingSocket.close(); 
 		} catch (Exception e) {
 			System.out.println("Cannot connect to the Collector");
 			System.exit(0);
@@ -131,11 +132,11 @@ public class FileServer { //implements Runnable{
 
 	public static String appendToDoc(String newText) throws Exception {
 		try {
-		FileWriter fstream = new FileWriter(fileName,true);
-		BufferedWriter out = new BufferedWriter(fstream);
-		out.write(newText);
-		out.close();
-		fstream.close();
+		    FileWriter fstream = new FileWriter(fileName,true);
+		    BufferedWriter out = new BufferedWriter(fstream);
+		    out.write(newText);
+		    out.close();
+		    fstream.close();
 		} catch (Exception e) {
 			System.out.println(e);
 			return "Error: Can't write to document";
@@ -148,13 +149,13 @@ public class FileServer { //implements Runnable{
 
 	public static String replaceDoc(String newText) throws Exception {
 		try {
-		file.delete();
-		file.createNewFile();
-		FileWriter fstream = new FileWriter(fileName,true);
-		BufferedWriter out = new BufferedWriter(fstream);
-		out.write(newText);
-		out.close();
-		fstream.close();
+		    file.delete();
+		    file.createNewFile();
+		    FileWriter fstream = new FileWriter(fileName,true);
+		    BufferedWriter out = new BufferedWriter(fstream);
+		    out.write(newText);
+		    out.close();
+		    fstream.close();
 		} catch (Exception e) {
 			System.out.println(e);
 			return "Error: Can't replace document";
