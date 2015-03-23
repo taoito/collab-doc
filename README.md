@@ -43,15 +43,19 @@ Client, File Servers, and Collector
 
   A sample testing environment on multiple machines:
 
-  1. Collector:
+  1. Compilation:
+
+        ./compile.sh
+
+  2. Collector:
 
         java -cp bin Collector [its listening port] | tee log.txt
 
-  2. File Servers on different machines:
+  3. File Servers on different machines:
 
         java -cp bin FileServer [its port] [Collector's IP] [Collector's Port]
 
-  3. Clients on different machines:
+  4. Clients on different machines:
 	
         java -cp bin Client [Collector's IP] [Collector's Port]
 	
